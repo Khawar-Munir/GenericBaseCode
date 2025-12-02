@@ -5919,7 +5919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2282852167679216709, guid: 2e86e0ce7f496844dae4717e90b86e1b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4408846595985623491, guid: 2e86e0ce7f496844dae4717e90b86e1b, type: 3}
       propertyPath: appOpenAdHandler
