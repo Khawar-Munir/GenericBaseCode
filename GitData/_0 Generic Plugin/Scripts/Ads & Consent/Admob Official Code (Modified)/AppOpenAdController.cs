@@ -10,6 +10,8 @@ using GoogleMobileAds.Common;
     [AddComponentMenu("GoogleMobileAds/Samples/AppOpenAdController")]
     public class AppOpenAdController : MonoBehaviour
     {
+
+    public bool justLoadOnDemand = false;
     /// <summary>
     /// UI element activated when an ad is ready to show.
     /// </summary>
@@ -186,8 +188,11 @@ using GoogleMobileAds.Common;
             {
                 Debug.Log("App open ad full screen content closed.");
 
+                if (!justLoadOnDemand)
+                {
                 // It may be useful to load a new ad when the current one is complete.
-                LoadAd();
+                    LoadAd();
+                }
             };
             // Raised when the ad failed to open full screen content.
             ad.OnAdFullScreenContentFailed += (AdError error) =>

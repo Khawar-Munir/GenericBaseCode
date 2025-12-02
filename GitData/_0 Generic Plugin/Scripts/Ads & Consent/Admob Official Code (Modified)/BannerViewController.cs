@@ -25,7 +25,7 @@ namespace GoogleMobileAds.Sample
         private const string _adUnitId = "unused";
 #endif
 
-        public BannerView _bannerView;
+        private BannerView _bannerView;
 
         /// <summary>
         /// Creates a 320x50 banner at top of the screen.

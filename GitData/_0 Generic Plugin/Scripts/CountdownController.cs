@@ -76,6 +76,7 @@ public class CountdownController : MonoBehaviour
     {
         if (_routine != null) StopCoroutine(_routine);
         _routine = null;
+        AdsAdapter.showBanner();
         SafeSetActive(panel, false);
     }
 

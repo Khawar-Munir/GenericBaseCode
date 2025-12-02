@@ -20,4 +20,6 @@ public class InterstitialAdHandler : InterstitialAdController
     {
         return (_interstitialAd != null && _interstitialAd.CanShowAd());
     }
+
+
 }

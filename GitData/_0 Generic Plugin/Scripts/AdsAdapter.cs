@@ -205,6 +205,7 @@ public class AdsAdapter : MonoBehaviour
         if (_remove_ads)
             return;
         Instance?.LoadInterstitial();
+       
     }
 
     public static bool isInterstitialReady()
@@ -282,11 +283,27 @@ public class AdsAdapter : MonoBehaviour
                 _self.adsLoadingPanel.panel.SetActive(false);
             };
             _self.adsLoadingPanel.panel.SetActive(true);
-            _self.adsLoadingPanel.Begin(() => Instance.ShowAppOpenWithPostCloseEvent(closeEvent));
+            _self.adsLoadingPanel.Begin(3,() => Instance.ShowAppOpenWithPostCloseEvent(closeEvent));
         }
         else
         {
-            closeEvent?.Invoke();
+            if (!_self.admobManager.justLoadOnDemand)
+            {
+                closeEvent?.Invoke();
+            }
+            else
+            {
+                if (Instance != null && !_remove_ads && HasInternet())
+                {
+                    _self._loadAndShowRoutine = _self.StartCoroutine(_self.loadAndShowAppOpenAd(closeEvent));
+                    _self.adsLoadingPanel.Begin(_self.stopLoadAndShowRoutine);
+
+                }
+                else
+                {
+                    closeEvent?.Invoke();
+                }
+            }
         }
 
     }
@@ -313,25 +330,145 @@ public class AdsAdapter : MonoBehaviour
                 Debug.Log("interstitial close event invoked after delay");
                 _self.adsLoadingPanel.panel.SetActive(false);
             };
-            _self.adsLoadingPanel.Begin(()=> Instance.ShowInterstitialWithPostCloseEvent(closeEvent));
+            _self.adsLoadingPanel.Begin(3,()=> Instance.ShowInterstitialWithPostCloseEvent(closeEvent));
         }
         else
         {
-            closeEvent?.Invoke();
+            if (!_self.admobManager.justLoadOnDemand)
+            {
+                closeEvent?.Invoke();
+            }
+            else 
+            {
+                if (Instance != null && !_remove_ads && HasInternet())
+                {
+                    _self._loadAndShowRoutine = _self.StartCoroutine(_self.loadAndShowInterstitial(closeEvent));
+                    closeEvent += _self.stopLoadAndShowRoutine;
+                    _self.adsLoadingPanel.Begin(closeEvent);
+                    
+                }
+                else
+                {
+                    closeEvent?.Invoke();
+                }
+            }
         }
 
     }
 
+
+    public void showInterstitialForButton()
+    {
+        showInterstitialWithDelayWithCloseEvent(() => { Debug.Log("post close event interstitial from button..."); });
+    }
+    private void stopLoadAndShowRoutine()
+    {
+        if (_loadAndShowRoutine != null) StopCoroutine(_loadAndShowRoutine);
+        _loadAndShowRoutine = null;
+    }
+    private Coroutine _loadAndShowRoutine=null;
+    public IEnumerator loadAndShowInterstitial(Action closeEvent = null)
+    {
+
+        loadInterstitial();
+        while (!isInterstitialReady())
+        {
+            yield return null;
+        }
+        closeEvent += () =>
+        {
+            Debug.Log("interstitial close event invoked in load and show int coroutine...");
+            _self.adsLoadingPanel.StopAndHide();
+        };
+        Instance.ShowInterstitialWithPostCloseEvent(closeEvent);
+        _loadAndShowRoutine = null;
+    }
+
+    public IEnumerator loadAndShowAppOpenAd(Action closeEvent = null)
+    {
+
+        loadAppOpen();
+        while (!Instance.IsAppOpenReady())
+        {
+            yield return null;
+        }
+        closeEvent += () =>
+        {
+            Debug.Log("AppOpenAd close event invoked in load and show AppOpen coroutine...");
+            _self.adsLoadingPanel.StopAndHide();
+        };
+        Instance.ShowAppOpenWithPostCloseEvent(closeEvent);
+        _loadAndShowRoutine = null;
+    }
+
+    public IEnumerator loadAndShowRewarded(Action processReward = null)
+    {
+
+        loadRewardedVideo();
+        while (!isRewardedReady())
+        {
+            yield return null;
+        }
+        processReward += () =>
+        {
+            Debug.Log("rewarded close event invoked in load and show int coroutine...");
+            _self.adsLoadingPanel.StopAndHide();
+        };
+        showRewardedVideo(() => processReward());
+        _loadAndShowRoutine = null;
+    }
+
+
+    public static bool HasInternet()
+    {
+        return Application.internetReachability != NetworkReachability.NotReachable;
+    }
     public static void showRewardedVideoWithDelay(Action processReward = null)
     {
         if (Instance != null && Instance.IsRewardedReady())
         {
-            _self.adsLoadingPanel.Begin(() => AdsAdapter.showRewardedVideo(() => processReward()));
+            _self.adsLoadingPanel.Begin(3, () => showRewardedVideo(() => processReward()));
         }
         else
         {
-            _self.StartCoroutine(_self.adFailedToShow());
+            if (!_self.admobManager.justLoadOnDemand)
+            {
+                _self.StartCoroutine(_self.adFailedToShow());
+            }
+            else
+            {
+                if (Instance != null && HasInternet())
+                {
+                    _self._loadAndShowRoutine = _self.StartCoroutine(_self.loadAndShowRewarded(processReward));
+                    _self.adsLoadingPanel.Begin(_self.stopLoadAndShowRoutine);
+                }
+                else
+                {
+                    _self.StartCoroutine(_self.adFailedToShow());
+                }
+            }
         }
+            /*
+             else
+            {
+                if (!_self.admobManager.justLoadOnDemand)
+                {
+                    closeEvent?.Invoke();
+                }
+                else
+                {
+                    if (Instance != null && !_remove_ads && HasInternet())
+                    {
+                        _self._loadAndShowRoutine = _self.StartCoroutine(_self.loadAndShowInterstitial(closeEvent));
+                        _self.adsLoadingPanel.Begin(_self.stopLoadAndShowRoutine);
+
+                    }
+                    else
+                    {
+                        closeEvent?.Invoke();
+                    }
+                }
+            }*/
     }
 
 

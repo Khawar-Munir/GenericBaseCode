@@ -14,20 +14,4 @@ public class BannerAdHandler : BannerViewController
     {
         
     }
-
-    public void changeBannerPositionToTop()
-    {
-        if (_bannerView != null)
-        {
-            _bannerView.SetPosition(GoogleMobileAds.Api.AdPosition.Top);
-        }
-    }
-
-    public void changeBannerPositionToBottom()
-    {
-        if (_bannerView != null)
-        {
-            _bannerView.SetPosition(GoogleMobileAds.Api.AdPosition.Bottom);
-        }
-    }
 }

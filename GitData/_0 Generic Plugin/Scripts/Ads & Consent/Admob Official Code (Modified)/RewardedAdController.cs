@@ -10,6 +10,9 @@ namespace GoogleMobileAds.Sample
     [AddComponentMenu("GoogleMobileAds/Samples/RewardedAdController")]
     public class RewardedAdController : MonoBehaviour
     {
+
+        public bool justLoadOnDemand = false;
+
         /// <summary>
         /// UI element activated when an ad is ready to show.
         /// </summary>
@@ -177,7 +180,10 @@ namespace GoogleMobileAds.Sample
             ad.OnAdFullScreenContentClosed += () =>
             {
                 Debug.Log("Rewarded ad full screen content closed.");
-                LoadAd();
+                if (!justLoadOnDemand)
+                {
+                    LoadAd();
+                }
             };
             // Raised when the ad failed to open full screen content.
             ad.OnAdFullScreenContentFailed += (AdError error) =>

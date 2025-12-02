@@ -5,6 +5,7 @@ using System.Diagnostics;
 //#endif
 public class AdMobAdsManager : MonoBehaviour, IAdsManager
 {
+    public bool justLoadOnDemand = false;
     public BannerAdHandler bannerHandler;
     public InterstitialAdHandler interstitialHandler;
     public RewardedAdHandler rewardedHandler;
@@ -27,6 +28,9 @@ public class AdMobAdsManager : MonoBehaviour, IAdsManager
 
         }
 
+        interstitialHandler.justLoadOnDemand = justLoadOnDemand;  //*123 to control loading/not loading another ad on interstitial ad close event...
+        rewardedHandler.justLoadOnDemand = justLoadOnDemand;  //*123 to control loading/not loading another ad on rewarded ad close event...
+        appOpenAdHandler.justLoadOnDemand = justLoadOnDemand;  //*123 to control loading/not loading another ad on rewarded ad close event...
     }
 
     public void Initialize()
@@ -34,10 +38,12 @@ public class AdMobAdsManager : MonoBehaviour, IAdsManager
 
 //#if USE_ADMOB
         MobileAds.Initialize(initStatus => {
+           
             bannerHandler.LoadAd();
-            interstitialHandler.LoadAd();
-            rewardedHandler.LoadAd();
-            appOpenAdHandler.LoadAd();
+            //LoadInterstitial();
+            //interstitialHandler.LoadAd();
+            //rewardedHandler.LoadAd();
+            //appOpenAdHandler.LoadAd();
 
 
         });
@@ -93,6 +99,7 @@ public class AdMobAdsManager : MonoBehaviour, IAdsManager
     public void HideBanner() => bannerHandler.HideAd();
 
     public void LoadInterstitial() => interstitialHandler.LoadAd();
+    
     public bool IsInterstitialReady() => interstitialHandler.IsReady();
     public void ShowInterstitial() => interstitialHandler.ShowAd();
 
