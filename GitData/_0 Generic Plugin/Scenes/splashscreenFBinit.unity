@@ -818,28 +818,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Purchasing.Codeless::UnityEngine.Purchasing.CodelessIAPButton
-  productId: unlock_all
-  buttonType: 0
-  automaticallyConfirmTransaction: 1
-  onProductFetched:
-    m_PersistentCalls:
-      m_Calls: []
-  onProductFetchFailed:
-    m_PersistentCalls:
-      m_Calls: []
-  onPurchaseFetched:
-    m_PersistentCalls:
-      m_Calls: []
-  onTransactionsRestored:
-    m_PersistentCalls:
-      m_Calls: []
-  onOrderPending:
-    m_PersistentCalls:
-      m_Calls: []
-  onOrderConfirmed:
-    m_PersistentCalls:
-      m_Calls:
-      - {m_Target: {fileID: 0}, m_TargetAssemblyTypeName: SplashSceneInappManager, Assembly-CSharp: }
 --- !u!114 &456885908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1092,14 +1070,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab8006a0f11bf34789c1184e1a62c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
-  z: 600
-  ping_pong_val: 0
-  center_val: 0
-  obj_status: 0
-  speed: 0
-  move_once_: 0
 --- !u!114 &526068455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1347,28 +1317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b79b5624d944058bd39aad2b90fb275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Purchasing.Codeless::UnityEngine.Purchasing.CodelessIAPButton
-  productId: unlock_all
-  buttonType: 0
-  automaticallyConfirmTransaction: 1
-  onProductFetched:
-    m_PersistentCalls:
-      m_Calls: []
-  onProductFetchFailed:
-    m_PersistentCalls:
-      m_Calls: []
-  onPurchaseFetched:
-    m_PersistentCalls:
-      m_Calls: []
-  onTransactionsRestored:
-    m_PersistentCalls:
-      m_Calls: []
-  onOrderPending:
-    m_PersistentCalls:
-      m_Calls: []
-  onOrderConfirmed:
-    m_PersistentCalls:
-      m_Calls:
-      - {m_Target: {fileID: 0}, m_TargetAssemblyTypeName: SplashSceneInappManager, Assembly-CSharp: }
 --- !u!1 &692368506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,14 +1458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab8006a0f11bf34789c1184e1a62c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
-  z: 600
-  ping_pong_val: 0
-  center_val: 0
-  obj_status: 0
-  speed: 0
-  move_once_: 0
 --- !u!114 &722739127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2180,14 +2120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab8006a0f11bf34789c1184e1a62c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
-  z: 600
-  ping_pong_val: 0
-  center_val: 0
-  obj_status: 0
-  speed: 0
-  move_once_: 0
 --- !u!114 &1077364939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2279,14 +2211,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.17329302, g: 0.21509439, b: 0.20704411, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7a358a2ac0b2b9548a88fc0810604155, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2967,14 +2899,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab8006a0f11bf34789c1184e1a62c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
-  z: 600
-  ping_pong_val: 0
-  center_val: 0
-  obj_status: 0
-  speed: 0
-  move_once_: 0
 --- !u!114 &1327687994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3681,8 +3605,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24a6644109b8c04493a2b1c92758fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArLvCzfhjjteuG7BbTADDB9/CSRCByQ1xcaIj4EQ+YKcM35hdi6xPakHo71RQ+n7U6hF7HzLXtXGDnfdmQwRcRShrDNhv0wOfLhbzJlVPHAtUOL2MvhAQ4aIcT8Sfy8V/+yDPbhj59agMKAVr24o7fD50jSOJSRwrbE2ibFum9NLTyGD3YNqm3AAFmY76UimndLGYidZ3So38ZvTzi28S6CU8OWIRgq1XuF1toJiSuibzwPH4X0wqNh3Cx0kAsgMkxHHJHaKejlcW5feafFfkCOMwkwn1Xn+lmTXcpzQMVdE87dmwE+Xm5H2vCygbFI0tkPg22LNy3otAdiPadYdK3QIDAQAB
-  isTestMode: 0
 --- !u!1 &2019442616
 GameObject:
   m_ObjectHideFlags: 0
