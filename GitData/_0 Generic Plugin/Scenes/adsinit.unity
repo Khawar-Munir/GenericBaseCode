@@ -1069,8 +1069,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
   m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
+  m_RequiresDepthTextureOption: 0
+  m_RequiresOpaqueTextureOption: 0
   m_CameraType: 0
   m_Cameras: []
   m_RendererIndex: -1
@@ -1424,14 +1424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab8006a0f11bf34789c1184e1a62c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
-  z: 600
-  ping_pong_val: 0
-  center_val: 0
-  obj_status: 0
-  speed: 0
-  move_once_: 0
 --- !u!114 &526068455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1936,14 +1928,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab8006a0f11bf34789c1184e1a62c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
-  z: 600
-  ping_pong_val: 0
-  center_val: 0
-  obj_status: 0
-  speed: 0
-  move_once_: 0
 --- !u!114 &722739127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3014,14 +2998,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab8006a0f11bf34789c1184e1a62c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
-  z: 600
-  ping_pong_val: 0
-  center_val: 0
-  obj_status: 0
-  speed: 0
-  move_once_: 0
 --- !u!114 &1077364939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3113,7 +3089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2528302, g: 0.2528302, b: 0.2528302, a: 1}
+  m_Color: {r: 0.18945523, g: 0.22221313, b: 0.22264141, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3644,7 +3620,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9daba3a8d14a9444394ad94ff54f8b28, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4a70e6ba5fa26eb4fb0958f859dfd68b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4071,14 +4047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab8006a0f11bf34789c1184e1a62c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 0
-  z: 600
-  ping_pong_val: 0
-  center_val: 0
-  obj_status: 0
-  speed: 0
-  move_once_: 0
 --- !u!114 &1327687994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4535,7 +4503,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 89e991a1dddc2c14cacf3ef862cbe028, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c0d2fa122248bde43a8db358fd2948e4, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5564,7 +5532,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a6aa6f2ab6c5215439e493f24dfaeda6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f0fe78eb8a6944d4ba9d1b79328e18e9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
