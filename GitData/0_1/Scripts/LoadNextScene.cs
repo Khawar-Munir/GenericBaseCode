@@ -19,6 +19,6 @@ public class LoadNextScene : MonoBehaviour {
 	{
 		while(slider.value<1)
 		yield return new WaitForEndOfFrame();
-		//SceneManager.LoadScene ("Store");
+		SceneManager.LoadScene("MainMenu");
 	}
 }

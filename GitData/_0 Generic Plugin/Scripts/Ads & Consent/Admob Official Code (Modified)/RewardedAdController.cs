@@ -83,7 +83,7 @@ namespace GoogleMobileAds.Sample
             if (_rewardedAd != null && _rewardedAd.CanShowAd())
             {
                 Debug.Log("Showing rewarded ad.");
-                _rewardedAd.Show((Reward reward) =>
+                _rewardedAd.Show((Api.Reward reward) =>
                 {
                     Debug.Log(String.Format("Rewarded ad granted a reward: {0} {1}",
                                             reward.Amount,
@@ -107,7 +107,7 @@ namespace GoogleMobileAds.Sample
             if (_rewardedAd != null && _rewardedAd.CanShowAd())
             {
                 Debug.Log("Showing rewarded ad.");
-                _rewardedAd.Show((Reward reward) =>
+                _rewardedAd.Show((Api.Reward reward) =>
                 {
                     Debug.Log(String.Format("Rewarded ad granted a reward: {0} {1}",
                                             reward.Amount,
