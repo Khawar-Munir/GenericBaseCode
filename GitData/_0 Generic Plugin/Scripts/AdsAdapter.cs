@@ -218,6 +218,7 @@ public class AdsAdapter : MonoBehaviour
     {
         if (_remove_ads)
             return;
+        hideBanner();
         Instance?.ShowInterstitial();
     }
 
@@ -241,10 +242,11 @@ public class AdsAdapter : MonoBehaviour
 
     public static void showRewardedVideo(Action processReward = null)
     {
+        
         if (Instance != null && Instance.IsRewardedReady())
         {
-
-            Instance?.ShowRewarded(processReward);
+            hideBanner();
+            Instance?.ShowRewarded(()=>UnityMainThreadDispatcher.Enqueue(processReward));
         }
         else
         {
@@ -265,7 +267,7 @@ public class AdsAdapter : MonoBehaviour
             return;
         if (Instance != null && Instance.IsAppOpenReady())
         {
-
+            hideBanner();
             Instance.ShowAppOpen();
         }
        
@@ -280,7 +282,7 @@ public class AdsAdapter : MonoBehaviour
             closeEvent += () =>
             {
                 Debug.Log("interstitial close event invoked after delay");
-                _self.adsLoadingPanel.panel.SetActive(false);
+                _self.adsLoadingPanel.HideCountDownPanel();
             };
             _self.adsLoadingPanel.panel.SetActive(true);
             _self.adsLoadingPanel.Begin(3,() => Instance.ShowAppOpenWithPostCloseEvent(closeEvent));
@@ -328,7 +330,7 @@ public class AdsAdapter : MonoBehaviour
             closeEvent += () =>
             {
                 Debug.Log("interstitial close event invoked after delay");
-                _self.adsLoadingPanel.panel.SetActive(false);
+                _self.adsLoadingPanel.StopAndHide();
             };
             _self.adsLoadingPanel.Begin(3,()=> Instance.ShowInterstitialWithPostCloseEvent(closeEvent));
         }
@@ -375,11 +377,16 @@ public class AdsAdapter : MonoBehaviour
         {
             yield return null;
         }
+
+        Debug.Log("***********interstitial loaded in load and show interstitial coroutine.......");
+        _self.adsLoadingPanel.StopCountDownCountDown();
         closeEvent += () =>
         {
-            Debug.Log("interstitial close event invoked in load and show int coroutine...");
-            _self.adsLoadingPanel.StopAndHide();
+            Debug.Log("***************interstitial close event invoked in load and show int coroutine...");
+            _self.adsLoadingPanel.HideCountDownPanel();
         };
+
+        //_self.adsLoadingPanel.StopAndHide();
         Instance.ShowInterstitialWithPostCloseEvent(closeEvent);
         _loadAndShowRoutine = null;
     }
@@ -392,11 +399,14 @@ public class AdsAdapter : MonoBehaviour
         {
             yield return null;
         }
+
+        _self.adsLoadingPanel.StopCountDownCountDown();
         closeEvent += () =>
         {
             Debug.Log("AppOpenAd close event invoked in load and show AppOpen coroutine...");
-            _self.adsLoadingPanel.StopAndHide();
+            _self.adsLoadingPanel.HideCountDownPanel();
         };
+
         Instance.ShowAppOpenWithPostCloseEvent(closeEvent);
         _loadAndShowRoutine = null;
     }
@@ -409,12 +419,15 @@ public class AdsAdapter : MonoBehaviour
         {
             yield return null;
         }
+
+        _self.adsLoadingPanel.StopCountDownCountDown();
         processReward += () =>
         {
             Debug.Log("rewarded close event invoked in load and show int coroutine...");
-            _self.adsLoadingPanel.StopAndHide();
+            _self.adsLoadingPanel.HideCountDownPanel();
         };
         showRewardedVideo(() => processReward());
+            //_self.adsLoadingPanel.StopAndHide();
         _loadAndShowRoutine = null;
     }
 

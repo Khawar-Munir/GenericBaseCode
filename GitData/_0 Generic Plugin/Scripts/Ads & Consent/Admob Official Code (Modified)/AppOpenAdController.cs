@@ -19,8 +19,8 @@ using GoogleMobileAds.Common;
 
     // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
-    //private const string _adUnitId = "ca-app-pub-9738471310605722/4890542243";
-    private const string _adUnitId = "ca-app-pub-3940256099942544/9257395921"; //<= // Test id
+    private const string _adUnitId = "ca-app-pub-9738471310605722/9308785820";
+    //private const string _adUnitId = "ca-app-pub-3940256099942544/9257395921"; //<= // Test id
 #elif UNITY_IPHONE
         private const string _adUnitId = "ca-app-pub-3940256099942544/5575463023";
 #else
@@ -152,7 +152,10 @@ using GoogleMobileAds.Common;
             if (state == AppState.Foreground)
             {
             //ShowAd();
-            AdsAdapter.showAppOpenWithDelay();
+
+            //*123 OnAppStateChanged is not guaranteed to run on the main thread.
+            UnityMainThreadDispatcher.Enqueue(() => AdsAdapter.showAppOpenWithDelay());
+            //AdsAdapter.showAppOpenWithDelay();
         }
         }
 

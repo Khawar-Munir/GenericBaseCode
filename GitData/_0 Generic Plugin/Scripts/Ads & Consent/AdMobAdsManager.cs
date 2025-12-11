@@ -59,7 +59,8 @@ public class AdMobAdsManager : MonoBehaviour, IAdsManager
             return;
         if (IsInterstitialReady())
         {
-            interstitialHandler._interstitialAd.OnAdFullScreenContentClosed+=postCloseEvent;
+            //interstitialHandler._interstitialAd.OnAdFullScreenContentClosed+=postCloseEvent;
+            interstitialHandler._interstitialAd.OnAdFullScreenContentClosed+=()=>UnityMainThreadDispatcher.Enqueue(postCloseEvent);
             ShowInterstitial();
 
             //*123 CAS.AI code...
@@ -80,16 +81,18 @@ public class AdMobAdsManager : MonoBehaviour, IAdsManager
             var ad = appOpenAdHandler._appOpenAd;
     if (ad == null) return;
 
-    System.Action onClosed = null;
-    onClosed = () =>
-    {
-        try { postCloseEvent?.Invoke(); } catch {}
-        // Unsubscribe our one-shot delegate
-        ad.OnAdFullScreenContentClosed -= onClosed;
-    };
+    //System.Action onClosed = null;
+    //onClosed = () =>
+    //{
+    //    try { postCloseEvent?.Invoke(); } catch {}
+    //    // Unsubscribe our one-shot delegate
+    //    ad.OnAdFullScreenContentClosed -= onClosed;
+    //};
+            postCloseEvent += () =>  ShowBanner();
+    //ad.OnAdFullScreenContentClosed += postCloseEvent;
+    ad.OnAdFullScreenContentClosed += ()=>UnityMainThreadDispatcher.Enqueue(postCloseEvent);
 
-    ad.OnAdFullScreenContentClosed += onClosed;
-
+            HideBanner();
             ShowAppOpen();
         }
     }

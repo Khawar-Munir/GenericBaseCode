@@ -81,7 +81,7 @@ namespace GoogleMobileAds.Sample
         {
             if (_rewardedInterstitialAd != null && _rewardedInterstitialAd.CanShowAd())
             {
-                _rewardedInterstitialAd.Show((Reward reward) =>
+                _rewardedInterstitialAd.Show((Api.Reward reward) =>
                 {
                     Debug.Log("Rewarded interstitial ad rewarded : " + reward.Amount);
                 });

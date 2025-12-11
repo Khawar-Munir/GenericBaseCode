@@ -20,8 +20,8 @@ namespace GoogleMobileAds.Sample
 
         // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
-        //private const string _adUnitId = "ca-app-pub-9738471310605722/4497744286";
-        private const string _adUnitId = "ca-app-pub-3940256099942544/5224354917"; // <= Test id
+        private const string _adUnitId = "ca-app-pub-9738471310605722/2545773211";
+        //private const string _adUnitId = "ca-app-pub-3940256099942544/5224354917"; // <= Test id
 #elif UNITY_IPHONE
         private const string _adUnitId = "ca-app-pub-3940256099942544/1712485313";
 #else
@@ -83,7 +83,7 @@ namespace GoogleMobileAds.Sample
             if (_rewardedAd != null && _rewardedAd.CanShowAd())
             {
                 Debug.Log("Showing rewarded ad.");
-                _rewardedAd.Show((Reward reward) =>
+                _rewardedAd.Show((Api.Reward reward) =>
                 {
                     Debug.Log(String.Format("Rewarded ad granted a reward: {0} {1}",
                                             reward.Amount,
@@ -107,7 +107,7 @@ namespace GoogleMobileAds.Sample
             if (_rewardedAd != null && _rewardedAd.CanShowAd())
             {
                 Debug.Log("Showing rewarded ad.");
-                _rewardedAd.Show((Reward reward) =>
+                _rewardedAd.Show((Api.Reward reward) =>
                 {
                     Debug.Log(String.Format("Rewarded ad granted a reward: {0} {1}",
                                             reward.Amount,
