@@ -152,7 +152,10 @@ using GoogleMobileAds.Common;
             if (state == AppState.Foreground)
             {
             //ShowAd();
-            AdsAdapter.showAppOpenWithDelay();
+
+            //*123 OnAppStateChanged is not guaranteed to run on the main thread.
+            UnityMainThreadDispatcher.Enqueue(() => AdsAdapter.showAppOpenWithDelay());
+            //AdsAdapter.showAppOpenWithDelay();
         }
         }
 

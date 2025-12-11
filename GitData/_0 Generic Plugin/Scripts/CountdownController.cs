@@ -40,7 +40,7 @@ public class CountdownController : MonoBehaviour
     public UnityEvent onCountdownStart;
     public UnityEvent onMethodInvoked;      // fires when onCall is invoked
     public UnityEvent onCountdownFinished;  // fires just before hiding the child
-
+    public GameObject loadingHeading;
     private Coroutine _routine;
 
     private void Awake()
@@ -61,9 +61,10 @@ public class CountdownController : MonoBehaviour
         Debug.Log("begin invoked with seconds: " + seconds);
         if (_routine != null) StopCoroutine(_routine);
         EnsurePanelAssigned();
+        //AudioListener.pause = true;
         AutoFindLabel();
 
-        AdsAdapter.hideBanner();
+        //AdsAdapter.hideBanner();
 
         SafeSetActive(panel, true);
 
@@ -74,12 +75,37 @@ public class CountdownController : MonoBehaviour
     /// <summary>Stop any active countdown and hide the CHILD panel immediately.</summary>
     public void StopAndHide()
     {
+        Debug.Log("************stopAndHide Invoked");
         if (_routine != null) StopCoroutine(_routine);
         _routine = null;
-        AdsAdapter.showBanner();
+        //AdsAdapter.showBanner();
         SafeSetActive(panel, false);
     }
 
+    public void StopCountDownCountDown()
+    {
+        Debug.Log("************stop countdown Invoked");
+        if (_routine != null)
+        {
+            Debug.Log("*************stoping countdown coroutine.....");
+            StopCoroutine(_routine);
+            _routine = null;
+            UpdateLabel(-1);
+            loadingHeading.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("*************countdown coroutine is null.....");
+        }
+        //AdsAdapter.showBanner();
+        //SafeSetActive(panel, false);
+    }
+    public void HideCountDownPanel()
+    {
+        //AudioListener.pause = false;
+        SafeSetActive(panel, false);
+        AdsAdapter.showBanner();
+    }
     //private IEnumerator Co_Countdown(float seconds, Action onCall)
     //{
     //    onCountdownStart?.Invoke();
@@ -124,7 +150,7 @@ public class CountdownController : MonoBehaviour
     private IEnumerator Co_Countdown(float seconds, Action onCall)
     {
         onCountdownStart?.Invoke();
-
+        loadingHeading.SetActive(true);
         // Render the panel at least once before ticking
         UpdateLabel(Mathf.CeilToInt(seconds));
         yield return null;
@@ -134,7 +160,7 @@ public class CountdownController : MonoBehaviour
         float triggerAt = Mathf.Max(0f, callAtSecondsLeft);
         bool invoked = false;
 
-        while (true)
+        while (true && _routine != null)
         {
             float now = Time.realtimeSinceStartup;
             float remaining = Mathf.Max(0f, end - now);
@@ -157,9 +183,7 @@ public class CountdownController : MonoBehaviour
         onCountdownFinished?.Invoke();
 
         // Hide only the CHILD panel; parent stays enabled
-        SafeSetActive(panel, false);
-
-        AdsAdapter.showBanner();
+        HideCountDownPanel();
         _routine = null;
     }
 
