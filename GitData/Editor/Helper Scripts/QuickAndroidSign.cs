@@ -6,10 +6,10 @@ using UnityEngine;
 public static class QuickAndroidSign
 {
     // ==== HARD-CODE YOURS HERE ====
-    private const string KeystorePath = "Assets/Keystore/Ibuildsot.keystore"; // or "../UserData/keystore.keystore"
-    private const string KeystorePass = "ibuildost";
-    private const string KeyAlias = "ibuildost";
-    private const string KeyAliasPass = "ibuildost";
+    private const string KeystorePath = "Assets/Keystore/akheerstudio.keystore"; // or "../UserData/keystore.keystore"
+    private const string KeystorePass = "akheerstudio";
+    private const string KeyAlias = "akheerstudio";
+    private const string KeyAliasPass = "akheerstudio";
     // ===============================
 
     // Shortcut: Ctrl/Cmd + Alt + S
