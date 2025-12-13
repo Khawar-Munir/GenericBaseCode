@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using GoogleMobileAds.Api;
 #if TMP_PRESENT
 using TMPro;
 #endif
@@ -42,7 +43,7 @@ public class CountdownController : MonoBehaviour
     public UnityEvent onCountdownFinished;  // fires just before hiding the child
     public GameObject loadingHeading;
     private Coroutine _routine;
-
+    public bool canRunCountdown = true;
     private void Awake()
     {
         EnsurePanelAssigned();
@@ -58,6 +59,7 @@ public class CountdownController : MonoBehaviour
     /// <summary>Begin with custom seconds and an optional Action to invoke at 'callAtSecondsLeft'.</summary>
     public void Begin(float seconds, Action onCall = null)
     {
+        canRunCountdown = true;
         Debug.Log("begin invoked with seconds: " + seconds);
         if (_routine != null) StopCoroutine(_routine);
         EnsurePanelAssigned();
@@ -78,12 +80,14 @@ public class CountdownController : MonoBehaviour
         Debug.Log("************stopAndHide Invoked");
         if (_routine != null) StopCoroutine(_routine);
         _routine = null;
+        canRunCountdown = false;
         //AdsAdapter.showBanner();
         SafeSetActive(panel, false);
     }
 
     public void StopCountDownCountDown()
     {
+        canRunCountdown = false;
         Debug.Log("************stop countdown Invoked");
         if (_routine != null)
         {
@@ -91,6 +95,7 @@ public class CountdownController : MonoBehaviour
             StopCoroutine(_routine);
             _routine = null;
             UpdateLabel(-1);
+            canRunCountdown = false;
             loadingHeading.SetActive(false);
         }
         else
@@ -103,6 +108,7 @@ public class CountdownController : MonoBehaviour
     public void HideCountDownPanel()
     {
         //AudioListener.pause = false;
+        AdSafetyManager.Instance.RestoreAfterAdLoad();
         SafeSetActive(panel, false);
         AdsAdapter.showBanner();
     }
@@ -151,8 +157,13 @@ public class CountdownController : MonoBehaviour
     {
         onCountdownStart?.Invoke();
         loadingHeading.SetActive(true);
+        //AdSafetyManager.Instance.PrepareForAdLoad();
         // Render the panel at least once before ticking
         UpdateLabel(Mathf.CeilToInt(seconds));
+        if (!canRunCountdown)
+        {
+            yield break;
+        }
         yield return null;
 
         float start = Time.realtimeSinceStartup;
@@ -162,6 +173,10 @@ public class CountdownController : MonoBehaviour
 
         while (true && _routine != null)
         {
+            if (!canRunCountdown)
+            {
+                yield break;
+            }
             float now = Time.realtimeSinceStartup;
             float remaining = Mathf.Max(0f, end - now);
 
@@ -179,6 +194,10 @@ public class CountdownController : MonoBehaviour
             yield return null;
         }
 
+        if (!canRunCountdown)
+        {
+            yield break;
+        }
         if (showZeroAtEnd) UpdateLabel(0);
         onCountdownFinished?.Invoke();
 
