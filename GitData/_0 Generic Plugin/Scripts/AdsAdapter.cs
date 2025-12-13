@@ -286,6 +286,7 @@ public class AdsAdapter : MonoBehaviour
             };
             _self.adsLoadingPanel.panel.SetActive(true);
             _self.adsLoadingPanel.Begin(3,() => Instance.ShowAppOpenWithPostCloseEvent(closeEvent));
+            AdSafetyManager.Instance.PrepareForAdLoad();
         }
         else
         {
@@ -299,6 +300,7 @@ public class AdsAdapter : MonoBehaviour
                 {
                     _self._loadAndShowRoutine = _self.StartCoroutine(_self.loadAndShowAppOpenAd(closeEvent));
                     _self.adsLoadingPanel.Begin(_self.stopLoadAndShowRoutine);
+                    AdSafetyManager.Instance.PrepareForAdLoad();
 
                 }
                 else
@@ -310,19 +312,19 @@ public class AdsAdapter : MonoBehaviour
 
     }
 
-    public static void showInterstitialWithDelay()
-    {
-        if (_remove_ads)
-            return;
-        if (Instance != null && Instance.IsInterstitialReady())
-        {
+    //public static void showInterstitialWithDelay()
+    //{
+    //    if (_remove_ads)
+    //        return;
+    //    if (Instance != null && Instance.IsInterstitialReady())
+    //    {
             
-            _self.adsLoadingPanel.Begin(showInterstitial);
-        }
+    //        _self.adsLoadingPanel.Begin(showInterstitial);
+    //    }
 
 
-    }
-    public static void showInterstitialWithDelayWithCloseEvent(Action closeEvent=null)
+    //}
+    public static void showInterstitialWithDelayWithCloseEvent(Action closeEvent=null, bool SceneWillChange=false)
     {
         
         if (Instance != null && Instance.IsInterstitialReady()&&!_remove_ads)
@@ -333,6 +335,7 @@ public class AdsAdapter : MonoBehaviour
                 _self.adsLoadingPanel.StopAndHide();
             };
             _self.adsLoadingPanel.Begin(3,()=> Instance.ShowInterstitialWithPostCloseEvent(closeEvent));
+            AdSafetyManager.Instance.PrepareForAdLoad(SceneWillChange);
         }
         else
         {
@@ -344,10 +347,12 @@ public class AdsAdapter : MonoBehaviour
             {
                 if (Instance != null && !_remove_ads && HasInternet())
                 {
-                    _self._loadAndShowRoutine = _self.StartCoroutine(_self.loadAndShowInterstitial(closeEvent));
+                    Action backupOfCloseEvent = closeEvent;
                     closeEvent += _self.stopLoadAndShowRoutine;
                     _self.adsLoadingPanel.Begin(closeEvent);
-                    
+                    _self._loadAndShowRoutine = _self.StartCoroutine(_self.loadAndShowInterstitial(backupOfCloseEvent));
+                    AdSafetyManager.Instance.PrepareForAdLoad(SceneWillChange);
+
                 }
                 else
                 {
@@ -393,7 +398,7 @@ public class AdsAdapter : MonoBehaviour
 
     public IEnumerator loadAndShowAppOpenAd(Action closeEvent = null)
     {
-
+        yield return new WaitForSecondsRealtime(0.5f);
         loadAppOpen();
         while (!Instance.IsAppOpenReady())
         {
@@ -441,6 +446,7 @@ public class AdsAdapter : MonoBehaviour
         if (Instance != null && Instance.IsRewardedReady())
         {
             _self.adsLoadingPanel.Begin(3, () => showRewardedVideo(() => processReward()));
+            AdSafetyManager.Instance.PrepareForAdLoad();
         }
         else
         {
@@ -454,6 +460,7 @@ public class AdsAdapter : MonoBehaviour
                 {
                     _self._loadAndShowRoutine = _self.StartCoroutine(_self.loadAndShowRewarded(processReward));
                     _self.adsLoadingPanel.Begin(_self.stopLoadAndShowRoutine);
+                    AdSafetyManager.Instance.PrepareForAdLoad();
                 }
                 else
                 {
